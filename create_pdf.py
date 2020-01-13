@@ -90,16 +90,16 @@ class PdfWriter(object):
         bar.x = 180
         bar.y = 0
         bar.categoryAxis.categoryNames = names
-        bar.valueAxis.forceZero = 1
+        bar.valueAxis.valueMin = 0
         bar.valueAxis.valueMax = 100
         bar.bars[0].fillColor = self.rgb_to_color_obj((65, 182, 230))
         bar.barLabels.angle = 0
         bar.barLabelFormat = DecimalFormatter(2, suffix='%')
         bar.barLabels.dx = 20
         d.add(bar, '')
-        self.content.append(self.large_space)
-        self.content.append(d)
         self.content.append(self.small_space)
+        self.content.append(d)
+        self.content.append(self.large_space)
 
     def compile_pdf(self, outfile):
         doc = SimpleDocTemplate(outfile)
@@ -225,4 +225,4 @@ def argument_parser():
 if __name__ == '__main__':
     args = argument_parser()
     write_results_to_pdf(args.output_file, args.seqmatch_output, args.centrifuge_output, args.stats_file,
-                         args.threshold)
+                         int(args.threshold))
